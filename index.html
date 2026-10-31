@@ -6,6 +6,9 @@
   <title>Game Oi - Jogos Simples e Divertidos</title>
   <meta name="description" content="Joga Memória, Quiz, Snake, Jogo da Velha, Reflexo e mais. Jogos simples e divertidos para telemóvel e PC.">
   <meta name="theme-color" content="#0f0c29">
+  <meta name="google-adsense-account" content="ca-pub-9939454910855614">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9939454910855614"
+     crossorigin="anonymous"></script>
   <style>
     :root {
       --bg: #0f0c29;
@@ -233,12 +236,12 @@
       align-items: center;
       justify-content: center;
       font-size: 1.3rem;
-      font-weight: 600;
       cursor: pointer;
       transition: background 0.15s;
       user-select: none;
       text-align: center;
       padding: 20px;
+      font-weight: 600;
     }
     #reflex-box.idle { background: rgba(255,255,255,0.1); }
     #reflex-box.wait { background: #b91c1c; }
@@ -376,7 +379,6 @@
       font-size: 0.85rem;
     }
 
-    /* Win / Result overlays */
     .result-box {
       text-align: center;
       padding: 10px 0;
@@ -386,7 +388,6 @@
       margin-bottom: 8px;
     }
 
-    /* High score badge */
     .highscore {
       font-size: 0.85rem;
       color: var(--warning);
@@ -567,7 +568,6 @@
         document.querySelectorAll('.game-section').forEach(s => s.classList.remove('active'));
         tab.classList.add('active');
         document.getElementById('game-' + tab.dataset.game).classList.add('active');
-        // Pause snake if leaving
         if (tab.dataset.game !== 'snake' && SnakeGame.running) SnakeGame.toggle();
       });
     });
@@ -780,12 +780,10 @@
       function draw() {
         ctx.fillStyle = 'rgba(0,0,0,0.4)';
         ctx.fillRect(0, 0, 300, 300);
-        // food
         ctx.fillStyle = '#ef4444';
         ctx.beginPath();
         ctx.roundRect(food.x * size, food.y * size, size - 1, size - 1, 4);
         ctx.fill();
-        // snake
         snake.forEach((s, i) => {
           ctx.fillStyle = i === 0 ? '#00d2ff' : '#3a7bd5';
           ctx.beginPath();
@@ -850,7 +848,6 @@
         });
       });
 
-      // Keyboard
       document.addEventListener('keydown', e => {
         if (!document.getElementById('game-snake').classList.contains('active')) return;
         if (e.key === 'ArrowUp') setDir(0, -1);
@@ -860,7 +857,6 @@
         if (e.key === ' ') { e.preventDefault(); toggle(); }
       });
 
-      // Swipe
       let tx, ty;
       canvas.addEventListener('touchstart', e => {
         tx = e.touches[0].clientX;
@@ -881,7 +877,7 @@
       }, { passive: true });
 
       init();
-      return { toggle, running: () => running, get running() { return running; } };
+      return { toggle, get running() { return running; } };
     })();
 
     // ========== TIC TAC TOE ==========
@@ -924,7 +920,6 @@
 
       function aiMove() {
         if (over) return;
-        // Simple AI: win > block > center > random
         let move = findBest('O') ?? findBest('X') ?? (board[4] === null ? 4 : null);
         if (move === null) {
           const empty = board.map((c, i) => c === null ? i : null).filter(x => x !== null);
